@@ -1,9 +1,3 @@
-docker-build:
-	docker build -t xml_conversion_app .
-
-docker-run:
-	docker run -p 8000:8000 --env-file .env xml_conversion_app
-
 compile-deps:
 	@echo "Compiling production dependencies..."
 	@pip install pip-tools
@@ -11,7 +5,6 @@ compile-deps:
 	@pip wheel --wheel-dir=./wheels -r requirements.txt
 	@echo "Production dependencies compiled!"
 
-# Command to run the app locally
 run-app-locally:
 	@echo "Running app..."
 	@uvicorn app.main:app --reload --port 8000
