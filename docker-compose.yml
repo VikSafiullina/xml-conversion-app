@@ -1,0 +1,40 @@
+version: "3.5"
+
+services:
+  app:
+    depends_on:
+      - redis
+    environment:
+      - USERNAME=myUser123
+      - PASSWORD=secretSecret
+      - ROSSUM_API_KEY=26a9986d663e5cc156d99b9cfac86a8007fcb3ff
+      - ROSSUM_BASE_URL=https://gggg.rossum.app/api/v1
+      - ROSSUM_EMAIL=gepige5313@padvn.com
+      - ROSSUM_PASSWORD=eQ6vGSBxFZSziqg
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - DUMMY_ENDPOINT=https://echo.free.beeceptor.com
+    ports:
+      - "8000:8000"
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    networks:
+      - app-network
+
+  redis:
+    image: redis:7.2-alpine
+    restart: always
+    ports:
+      - '4407:6379'
+    command: redis-server --save 20 1 --loglevel warning --requirepass eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81
+    healthcheck:
+      test: [ "CMD", "redis-cli", "--raw", "incr", "ping" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - app-network
+
+networks:
+  app-network:
