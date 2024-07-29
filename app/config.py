@@ -1,4 +1,5 @@
 import os
+
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -12,3 +13,5 @@ CACHE_DURATION = int(os.getenv("CACHE_DURATION", 3600))
 
 REDIS_HOST = os.getenv("REDIS_HOST")
 REDIS_PORT = os.getenv("REDIS_PORT")
+
+LOGGING_LEVEL = os.getenv("LOGGING_LEVEL", "DEBUG")

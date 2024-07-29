@@ -1,24 +1,28 @@
-from lxml import etree
-import logging
 import json
+import logging
 import shlex
 
+from lxml import etree
+
 logger = logging.getLogger(__name__)
+
 
 def convert_to_custom_xml(data):
     try:
         # Load the input XML data
-        xml_data = etree.fromstring(data.encode('utf-8'))
+        xml_data = etree.fromstring(data.encode("utf-8"))
 
         # Load the XSLT stylesheet
-        xslt_doc = etree.parse('app/schema/transform.xslt')
+        xslt_doc = etree.parse("app/schema/transform.xslt")
         xslt_transformer = etree.XSLT(xslt_doc)
 
         # Apply the XSLT transformation
         transformed_doc = xslt_transformer(xml_data)
 
         # Convert the transformed XML to a string
-        output_xml = etree.tostring(transformed_doc, pretty_print=True, encoding='unicode')
+        output_xml = etree.tostring(
+            transformed_doc, pretty_print=True, encoding="unicode"
+        )
 
         return output_xml
     except etree.XMLSyntaxError as e:
@@ -30,8 +34,6 @@ def convert_to_custom_xml(data):
     except Exception as e:
         logger.error("Unexpected error: %s", e)
         raise
-
-
 
 
 def log_request_as_curl(request):
